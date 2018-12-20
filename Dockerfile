@@ -4,21 +4,23 @@ MAINTAINER "Humberto López Menéndez" <shlopezm4@gmail.com>
 
 RUN apt-get update
 
-RUN sudo apt install curl
+RUN apt-get install -y curl
+
+RUN apt-get install -y gnupg
 
 RUN curl https://www.mongodb.org/static/pgp/server-4.0.asc | sudo apt-key add -
 
-RUN sudo nano /etc/apt/sources.list.d/mongodb-org-4.0.list
+RUN touch /etc/apt/sources.list.d/mongodb-org-4.0.list
 
-RUN echo "deb http://repo.mongodb.org/apt/debian stretch/mongodb-org/4.0 main" > etc/apt/sources.list.d/mongodb-org-4.0.list
+RUN echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/4.0 main" | tee /etc/apt/sources.list.d/mongodb-org-4.0.list
 
-RUN sudo apt update
+RUN apt-get update
 
-RUN sudo apt-get install mongodb-org
+RUN apt-get install -y mongodb-org
 
-RUN sudo systemctl enable mongod
+CMD service mongod enable
 
-RUN sudo systemctl start mongod
+CMD service mongod start
 
 EXPOSE 27017
 
