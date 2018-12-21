@@ -1,0 +1,18 @@
+##Create a volume
+docker volume create mongodbdata
+
+#Run an image
+docker run -d -p 27017:27017 -v mongodbdata:/data/db mymongox mongod --auth
+
+##Acces to the container
+docker exec -it [id] bash
+
+##Inside the Container
+#Access to the MongoDB Shell
+:/# mongo
+
+#Inside the mongo shell, do this:
+>use admin
+
+>db.createUser( {user:"user", pwd:"secret", roles:["root"]} )
+
